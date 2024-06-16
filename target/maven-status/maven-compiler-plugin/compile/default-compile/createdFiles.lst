@@ -1,0 +1,4 @@
+com/hibernate/hibernatejavaapp/HibernateJavaApp.class
+com/hibernate/model/Usuario.class
+com/hibernate/controller/UsuarioController.class
+com/hibernate/view/UsuarioView.class
