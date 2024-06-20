@@ -1,38 +1,28 @@
 package com.applicacion_hibernate.controller;
 
+import com.applicacion_hibernate.DAO.Model;
 import com.applicacion_hibernate.config.HibernateUtil;
 import com.applicacion_hibernate.entidades.Usuario;
 import java.util.Date;
-import org.hibernate.HibernateException;
+import java.util.List;
 import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.cfg.Configuration;
 
 public class UsuarioController {
 
+    private final Model<Usuario> usuarioModel = new Model<>(Usuario.class) {};
 
 
-    /**
-     * Crea un usuario en la tabla de "usuarios"
-     * @param username nombre de usuario
-     * @param password contraseña de usuario
-     * @param email email del usuario
-     */
-    public void createUsuario(String username, String password, String email) {
-        Session session = HibernateUtil.getSessionFactory().openSession();
-        try {
-            Usuario newUsuario = new Usuario(username, password, email, new Date(), new Date());
-            session.beginTransaction(); //Abre transaccion
-            session.persist(newUsuario); //Se insertan valores
-            session.getTransaction().commit(); //Guarda transaccion
-            System.out.println("Usuario creado");
-
-        } catch (Exception e) {
-            System.out.println("Error al crear el usuario");
-            e.printStackTrace();
-        } finally {
-            session.close();
+    public void listarUsuarios(){
+        List<Usuario> usuarios = usuarioModel.listar();
+        for(Usuario usuario : usuarios){
+            System.out.println(usuario.toString());
         }
+        
+    }
+    
+    public void createUsuario(String username, String password, String email) {
+        Usuario newUsuario = new Usuario(username, password, email, new Date(), new Date());
+        usuarioModel.add(newUsuario);
     }
 
     /**
@@ -67,21 +57,25 @@ public class UsuarioController {
      * @param identificador 
      * Función que elimina de la tabla "usuarios" un usuario concreto
      */
-    public void deleteUsuario(int identificador) {
-        Session session = HibernateUtil.getSessionFactory().openSession();
-        try {
-            session.beginTransaction();
-            Usuario usuario = session.get(Usuario.class, identificador);
-
-            session.remove(usuario);
-            session.getTransaction().commit();
-            System.out.println("Usuario eliminado correctamente");
-
-        } catch (Exception e) {
-            System.out.println("Error al eliminar el usuario: \n" + e);
-        } finally {
-            session.close();
-        }
+//    public void deleteUsuario(int identificador) {
+//        Session session = HibernateUtil.getSessionFactory().openSession();
+//        try {
+//            session.beginTransaction();
+//            Usuario usuario = session.get(Usuario.class, identificador);
+//
+//            session.remove(usuario);
+//            session.getTransaction().commit();
+//            System.out.println("Usuario eliminado correctamente");
+//
+//        } catch (Exception e) {
+//            System.out.println("Error al eliminar el usuario: \n" + e);
+//        } finally {
+//            session.close();
+//        }
+//    }
+    
+       public void deleteUsuario(int identificador) {
+           usuarioModel.delete(identificador);
     }
 
 }

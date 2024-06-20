@@ -1,5 +1,6 @@
-com\applicacion_hibernate\DAO\Model.class
-com\applicacion_hibernate\controller\UsuarioController.class
-com\applicacion_hibernate\main\HibernateJavaApp.class
-com\applicacion_hibernate\entidades\Usuario.class
-com\applicacion_hibernate\config\HibernateUtil.class
+com/applicacion_hibernate/main/HibernateJavaApp.class
+com/applicacion_hibernate/DAO/Model.class
+com/applicacion_hibernate/controller/UsuarioController$1.class
+com/applicacion_hibernate/controller/UsuarioController.class
+com/applicacion_hibernate/config/HibernateUtil.class
+com/applicacion_hibernate/entidades/Usuario.class
