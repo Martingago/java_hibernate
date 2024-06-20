@@ -1,12 +1,14 @@
-package com.hibernate.model;
+package com.applicacion_hibernate.entidades;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import java.util.Date;
+import org.hibernate.annotations.DynamicUpdate;
 
 @Entity
+@DynamicUpdate
 @Table(name="usuarios")
 public class Usuario {
 
@@ -82,4 +84,18 @@ public class Usuario {
         this.ultima_sesion = ultima_sesion;
     }
 
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("Usuario{");
+        sb.append("id=").append(id);
+        sb.append(", username=").append(username);
+        sb.append(", password=").append(password);
+        sb.append(", email=").append(email);
+        sb.append(", fecha_creacion=").append(fecha_creacion);
+        sb.append(", ultima_sesion=").append(ultima_sesion);
+        sb.append('}');
+        return sb.toString();
+    }
+    
 }

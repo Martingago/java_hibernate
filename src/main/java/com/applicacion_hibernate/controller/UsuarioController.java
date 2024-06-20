@@ -1,0 +1,87 @@
+package com.applicacion_hibernate.controller;
+
+import com.applicacion_hibernate.config.HibernateUtil;
+import com.applicacion_hibernate.entidades.Usuario;
+import java.util.Date;
+import org.hibernate.HibernateException;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.cfg.Configuration;
+
+public class UsuarioController {
+
+
+
+    /**
+     * Crea un usuario en la tabla de "usuarios"
+     * @param username nombre de usuario
+     * @param password contraseña de usuario
+     * @param email email del usuario
+     */
+    public void createUsuario(String username, String password, String email) {
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        try {
+            Usuario newUsuario = new Usuario(username, password, email, new Date(), new Date());
+            session.beginTransaction(); //Abre transaccion
+            session.persist(newUsuario); //Se insertan valores
+            session.getTransaction().commit(); //Guarda transaccion
+            System.out.println("Usuario creado");
+
+        } catch (Exception e) {
+            System.out.println("Error al crear el usuario");
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+    }
+
+    /**
+     * Actualiza los datos de un usurio especificado
+     * @param identificador del usuario a actualizar
+     * @param updateUsuario información actualizada del usuario
+     */
+    public void updateUsuario(int identificador, Usuario updateUsuario) {
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        try {
+            session.beginTransaction();
+            Usuario oldUsuario = session.get(Usuario.class, identificador);
+
+            if (oldUsuario != null) {
+                updateUsuario.setId(identificador);
+                session.merge(updateUsuario);
+                  session.getTransaction().commit();
+                System.out.println("Usuario actualizado correctamente");
+            }else{
+                System.out.println("No se ha encontrado un usuario con el ID " + identificador + "especificado");
+            }
+           
+        } catch (Exception e) {
+            System.out.println("Error al actualizar el usuario: \n" + e);
+        } finally {
+            session.close();
+        }
+    }
+
+    /**
+     * Recibe como parametro un identificador a eliminar
+     * @param identificador 
+     * Función que elimina de la tabla "usuarios" un usuario concreto
+     */
+    public void deleteUsuario(int identificador) {
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        try {
+            session.beginTransaction();
+            Usuario usuario = session.get(Usuario.class, identificador);
+
+            session.remove(usuario);
+            session.getTransaction().commit();
+            System.out.println("Usuario eliminado correctamente");
+
+        } catch (Exception e) {
+            System.out.println("Error al eliminar el usuario: \n" + e);
+        } finally {
+            session.close();
+        }
+    }
+
+}
