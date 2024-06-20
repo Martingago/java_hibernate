@@ -11,8 +11,10 @@ public class HibernateUtil {
     private final static SessionFactory sessionFactory = buildSessionFactory();
 
     /**
-     * Función de configuracion que crea un objeto SessionFactory de la aplicación
-     * @return 
+     * Función de configuracion que crea un objeto SessionFactory de la
+     * aplicación
+     *
+     * @return
      */
     private static SessionFactory buildSessionFactory() {
         try {
