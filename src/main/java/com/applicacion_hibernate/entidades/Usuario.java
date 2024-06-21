@@ -37,8 +37,7 @@ public class Usuario {
     @Column(name = "user_last_connection")
     private Date ultima_sesion;
 
-    @OneToOne(cascade = {CascadeType.ALL})
-    @JoinColumn(name = "id_direccion")
+    @OneToOne(mappedBy = "usuario", cascade = CascadeType.ALL)   
     private Direccion direccion;
 
     public Usuario(String username, String password, String email, Date fecha_creacion, Date ultima_sesion) {

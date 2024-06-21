@@ -22,9 +22,15 @@ public class UsuarioController {
     }
 
     public void createUsuario(String username, String password, String email) {
-        Direccion newDireccion = new Direccion("Calle mis Santos", 12, 15705, "A Coruña", "España");
+        Direccion newDireccion = new Direccion("Rua San pedro", 43, 15704, "A Coruña", "España");
         Usuario newUsuario = new Usuario(username, password, email, new Date(), new Date());
-        newUsuario.setDireccion(newDireccion);
+        newUsuario.setDireccion(newDireccion); //Se establece en el usuario la direccion
+        newDireccion.setUsuario(newUsuario); //Se establece en la direccion el usuario
+        usuarioModel.add(newUsuario);
+    }
+    
+    public void createSimpleUsuario(String username, String password, String email){
+        Usuario newUsuario = new Usuario(username, password, email, new Date(), new Date());
         usuarioModel.add(newUsuario);
     }
 
