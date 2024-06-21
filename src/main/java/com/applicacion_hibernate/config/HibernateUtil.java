@@ -1,5 +1,6 @@
 package com.applicacion_hibernate.config;
 
+import com.applicacion_hibernate.entidades.Direccion;
 import com.applicacion_hibernate.entidades.Usuario;
 import java.util.List;
 import org.hibernate.HibernateException;
@@ -20,7 +21,7 @@ public class HibernateUtil {
         try {
             Configuration configuration = new Configuration();
             configuration.configure("hibernate.cfg.xml");
-            List<Class<?>> annotatedClass = List.of(Usuario.class);
+            List<Class<?>> annotatedClass = List.of(Usuario.class, Direccion.class);
 
             //Se añaden todas los modelos <mapping> existentes en la aplicación
             for (Class<?> map : annotatedClass) {

@@ -4,6 +4,7 @@ import com.applicacion_hibernate.config.HibernateUtil;
 import java.lang.reflect.Field;
 import java.util.List;
 import org.hibernate.Session;
+import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 
 public abstract class Model<T> {
@@ -46,13 +47,18 @@ public abstract class Model<T> {
      */
     public void add(T entidad) {
         Session session = HibernateUtil.getSessionFactory().openSession();
+        Transaction transaction = null;
         try {
-            session.beginTransaction();
+            transaction = session.beginTransaction();
             session.persist(entidad);
             session.getTransaction().commit();
             System.out.println("Datos añadidos con éxito");
         } catch (Exception e) {
             System.out.println("Error al añadir datos: " + e);
+            if(transaction != null){
+                //Si se produce un error al insertar datos se realiza un rollback
+                transaction.rollback();
+            }
         } finally {
             session.close();
         }

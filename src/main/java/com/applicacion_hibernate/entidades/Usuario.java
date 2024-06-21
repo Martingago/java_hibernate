@@ -1,30 +1,45 @@
 package com.applicacion_hibernate.entidades;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import java.util.Date;
 import org.hibernate.annotations.DynamicUpdate;
 
 @Entity
 @DynamicUpdate
-@Table(name="usuarios")
+@Table(name = "usuarios")
 public class Usuario {
 
     @Id
-    @Column(name="identificador")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_usuario")
     private int id;
-    @Column(name="user_name")
+    
+    @Column(name = "user_name")
     private String username;
-    @Column(name="user_password")
+    
+    @Column(name = "user_password")
     private String password;
-    @Column(name="user_email")
+    
+    @Column(name = "user_email")
     private String email;
-    @Column(name="user_date_creation")
+    
+    @Column(name = "user_date_creation")
     private Date fecha_creacion;
-    @Column(name="user_last_connection")
+    
+    @Column(name = "user_last_connection")
     private Date ultima_sesion;
+
+    @OneToOne(cascade = {CascadeType.ALL})
+    @JoinColumn(name = "id_direccion")
+    private Direccion direccion;
 
     public Usuario(String username, String password, String email, Date fecha_creacion, Date ultima_sesion) {
         this.username = username;
@@ -33,6 +48,7 @@ public class Usuario {
         this.fecha_creacion = fecha_creacion;
         this.ultima_sesion = ultima_sesion;
     }
+
     public Usuario() {
     }
 
@@ -84,18 +100,19 @@ public class Usuario {
         this.ultima_sesion = ultima_sesion;
     }
 
-    @Override
-    public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append("Usuario{");
-        sb.append("id=").append(id);
-        sb.append(", username=").append(username);
-        sb.append(", password=").append(password);
-        sb.append(", email=").append(email);
-        sb.append(", fecha_creacion=").append(fecha_creacion);
-        sb.append(", ultima_sesion=").append(ultima_sesion);
-        sb.append('}');
-        return sb.toString();
+    public Direccion getDireccion() {
+        return direccion;
+    }
+
+    public void setDireccion(Direccion direccion) {
+        this.direccion = direccion;
     }
     
+    @Override
+    public String toString() {
+        return "Usuario{" + "id=" + id + ", username=" + username + ", password=" + password + ", email=" + email + ", fecha_creacion=" + fecha_creacion + ", ultima_sesion=" + ultima_sesion + ", direccion=" + direccion + '}';
+    }
+
+
+
 }

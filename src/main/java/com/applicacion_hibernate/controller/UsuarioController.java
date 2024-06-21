@@ -2,6 +2,7 @@ package com.applicacion_hibernate.controller;
 
 import com.applicacion_hibernate.DAO.Model;
 import com.applicacion_hibernate.config.HibernateUtil;
+import com.applicacion_hibernate.entidades.Direccion;
 import com.applicacion_hibernate.entidades.Usuario;
 import java.util.Date;
 import java.util.List;
@@ -21,7 +22,9 @@ public class UsuarioController {
     }
 
     public void createUsuario(String username, String password, String email) {
+        Direccion newDireccion = new Direccion("Calle mis Santos", 12, 15705, "A Coruña", "España");
         Usuario newUsuario = new Usuario(username, password, email, new Date(), new Date());
+        newUsuario.setDireccion(newDireccion);
         usuarioModel.add(newUsuario);
     }
 
