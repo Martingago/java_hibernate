@@ -28,7 +28,7 @@ public class Direccion {
     private String direccion;
 
     @Column(name = "numero")
-    private int numero;
+    private String numero;
 
     @Column(name = "cod_postal")
     private int cod_postal;
@@ -42,7 +42,7 @@ public class Direccion {
     public Direccion() {
     }
 
-    public Direccion(String direccion, int numero, int cod_postal, String provincia, String pais) {
+    public Direccion(String direccion, String numero, int cod_postal, String provincia, String pais) {
         this.direccion = direccion;
         this.numero = numero;
         this.cod_postal = cod_postal;
@@ -66,11 +66,11 @@ public class Direccion {
         this.direccion = direccion;
     }
 
-    public int getNumero() {
+    public String getNumero() {
         return numero;
     }
 
-    public void setNumero(int numero) {
+    public void setNumero(String numero) {
         this.numero = numero;
     }
 

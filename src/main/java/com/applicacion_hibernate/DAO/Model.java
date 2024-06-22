@@ -1,7 +1,6 @@
 package com.applicacion_hibernate.DAO;
 
 import com.applicacion_hibernate.config.HibernateUtil;
-import java.lang.reflect.Field;
 import java.util.List;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -11,7 +10,8 @@ public abstract class Model<T> {
 
     //https://www.youtube.com/watch?v=9Z0Os9w_VMY
     /**
-     * Constructor que recibe como parametro la entidad a la que debe aludir en la Base de datos para realizar las operaciones CRUD
+     * Constructor que recibe como parametro la entidad a la que debe aludir en
+     * la Base de datos para realizar las operaciones CRUD
      */
     private final Class<T> entityClass;
 
@@ -41,6 +41,32 @@ public abstract class Model<T> {
     }
 
     /**
+     * Obtiene los datos de una entidad en especifico de la base de datos
+     *
+     * @param identificador de la entidad a buscar
+     * @return identidad encontrada en la base de datos.
+     */
+    public T get(int identificador) {
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        Transaction transaction = null;
+        T entidad = null;
+        try {
+            transaction = session.beginTransaction();
+            //Buscar entidad por identificador:
+            entidad = session.get(entityClass, identificador);
+            transaction.commit();
+        } catch (Exception e) {
+            System.out.println("Se ha producido un error al cargar los datos");
+            if (transaction != null) {
+                transaction.rollback(); //Se cancela la transaction
+            }
+        } finally {
+            session.close();
+        }
+        return entidad;
+    }
+
+    /**
      * Funcion que añade un modelo a una BBDD
      *
      * @param entidad
@@ -55,7 +81,7 @@ public abstract class Model<T> {
             System.out.println("Datos añadidos con éxito");
         } catch (Exception e) {
             System.out.println("Error al añadir datos: " + e);
-            if(transaction != null){
+            if (transaction != null) {
                 //Si se produce un error al insertar datos se realiza un rollback
                 transaction.rollback();
             }
@@ -64,6 +90,10 @@ public abstract class Model<T> {
         }
     }
 
+    /**
+     * Elimina de la base de datos una entidad con un identificador especificado
+     * @param identificador de la entidad a eliminar
+     */
     public void delete(int identificador) {
         Session session = HibernateUtil.getSessionFactory().openSession();
         try {
@@ -84,26 +114,32 @@ public abstract class Model<T> {
     }
 
     /**
-     * Funcion que añade un modelo a una BBDD
+     * Funcion que actualiza un modelo de una BBDD
      *
      * @param entidad
      */
     public void update(int identificador, T updatedEntidad) {
         Session session = HibernateUtil.getSessionFactory().openSession();
+        Transaction transaction = null;
         try {
-            session.beginTransaction();
+            transaction = session.beginTransaction();
             T oldEntidad = session.get(entityClass, identificador);
             if (oldEntidad != null) {
-                Field idField = entityClass.getDeclaredField("identificador");
-                idField.setAccessible(true);
-
+                //Actualiza la entidad con los nuevos valores que recibe como parametro
+                session.merge(updatedEntidad);
+                transaction.commit();
+                System.out.println("Datos actualizados con éxito");
+            } else {
+                System.out.println("No se ha encontrado una entidad con identificador: " + identificador);
+                if (transaction != null) {
+                    transaction.rollback();
+                }
             }
-
-            session.merge(updatedEntidad);
-            session.getTransaction().commit();
-            System.out.println("Datos añadidos con éxito");
         } catch (Exception e) {
-            System.out.println("Error al añadir datos: " + e);
+            System.out.println("Error al actualizar los datos: " + e);
+            if (transaction != null) {
+                transaction.rollback();
+            }
         } finally {
             session.close();
         }
