@@ -3,9 +3,11 @@ package com.applicacion_hibernate.entidades;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import java.util.Date;
@@ -36,7 +38,7 @@ public class Usuario {
     @Column(name = "user_last_connection")
     private Date ultima_sesion;
 
-    @OneToOne(mappedBy = "usuario", cascade = CascadeType.ALL)   
+    @OneToOne(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private Direccion direccion;
 
     public Usuario(String username, String password, String email, Date fecha_creacion, Date ultima_sesion) {
@@ -108,9 +110,7 @@ public class Usuario {
     
     @Override
     public String toString() {
-        return "Usuario{" + "id=" + id + ", username=" + username + ", password=" + password + ", email=" + email + ", fecha_creacion=" + fecha_creacion + ", ultima_sesion=" + ultima_sesion + ", direccion=" + direccion + '}';
+        return "Usuario{" + "id=" + id + ", username=" + username + ", password=" + password + ", email=" + email + ", fecha_creacion=" + fecha_creacion + ", ultima_sesion=" + ultima_sesion +'}';
     }
-
-
 
 }

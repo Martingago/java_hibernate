@@ -1,12 +1,9 @@
 package com.applicacion_hibernate.controller;
 
 import com.applicacion_hibernate.DAO.Model;
-import com.applicacion_hibernate.config.HibernateUtil;
-import com.applicacion_hibernate.entidades.Direccion;
 import com.applicacion_hibernate.entidades.Usuario;
 import java.util.Date;
 import java.util.List;
-import org.hibernate.Session;
 
 public class UsuarioController {
 
@@ -43,25 +40,6 @@ public class UsuarioController {
      */
     public void updateUsuario(int identificador, Usuario updateUsuario) {
         usuarioModel.update(identificador, updateUsuario);
-//        Session session = HibernateUtil.getSessionFactory().openSession();
-//        try {
-//            session.beginTransaction();
-//            Usuario oldUsuario = session.get(Usuario.class, identificador);
-//
-//            if (oldUsuario != null) {
-//                updateUsuario.setId(identificador);
-//                session.merge(updateUsuario);
-//                session.getTransaction().commit();
-//                System.out.println("Usuario actualizado correctamente");
-//            } else {
-//                System.out.println("No se ha encontrado un usuario con el ID " + identificador + "especificado");
-//            }
-//
-//        } catch (Exception e) {
-//            System.out.println("Error al actualizar el usuario: \n" + e);
-//        } finally {
-//            session.close();
-//        }
     }
 
     /**

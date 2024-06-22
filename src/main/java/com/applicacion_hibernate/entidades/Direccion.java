@@ -1,7 +1,9 @@
 package com.applicacion_hibernate.entidades;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -20,8 +22,8 @@ public class Direccion {
     @Column(name = "id_direccion")
     private int identificador;
     
-    @OneToOne
-    @JoinColumn(name = "id_usuario")
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="id_usuario", referencedColumnName = "id_usuario")
     private Usuario usuario;
 
     @Column(name = "direccion")
@@ -38,7 +40,7 @@ public class Direccion {
 
     @Column(name = "pais")
     private String pais;
-
+    
     public Direccion() {
     }
 

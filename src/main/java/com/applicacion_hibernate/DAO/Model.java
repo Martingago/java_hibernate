@@ -24,21 +24,21 @@ public abstract class Model<T> {
      *
      * @return
      */
-    public List<T> listar() {
-        List<T> entidades = null;
-        Session session = HibernateUtil.getSessionFactory().openSession();
-        try {
-            String hql = "from " + entityClass.getSimpleName();
-            Query q = session.createQuery(hql);
-            entidades = q.list();
-        } catch (Exception e) {
-            System.out.println("Error al listar las entidades \n" + e);
-        } finally {
-            session.close();
-        }
-
-        return entidades;
+   public List<T> listar() {
+    List<T> entidades = null;
+    Session session = HibernateUtil.getSessionFactory().openSession();
+    try {
+        String hql = "FROM " + entityClass.getSimpleName();
+        Query<T> query = session.createQuery(hql, entityClass);
+        entidades = query.getResultList();
+    } catch (Exception e) {
+        System.out.println("Error al listar las entidades \n" + e);
+    } finally {
+        session.close();
     }
+    return entidades;
+}
+
 
     /**
      * Obtiene los datos de una entidad en especifico de la base de datos
@@ -70,8 +70,10 @@ public abstract class Model<T> {
      * Funcion que añade un modelo a una BBDD
      *
      * @param entidad
+     * @return boolean
      */
-    public void add(T entidad) {
+    public boolean add(T entidad) {
+        boolean success = false;
         Session session = HibernateUtil.getSessionFactory().openSession();
         Transaction transaction = null;
         try {
@@ -79,7 +81,9 @@ public abstract class Model<T> {
             session.persist(entidad);
             session.getTransaction().commit();
             System.out.println("Datos añadidos con éxito");
+            success = true;
         } catch (Exception e) {
+            success = false;
             System.out.println("Error al añadir datos: " + e);
             if (transaction != null) {
                 //Si se produce un error al insertar datos se realiza un rollback
@@ -88,37 +92,52 @@ public abstract class Model<T> {
         } finally {
             session.close();
         }
+        return success;
     }
 
     /**
      * Elimina de la base de datos una entidad con un identificador especificado
+     *
      * @param identificador de la entidad a eliminar
+     * @return boolean
      */
-    public void delete(int identificador) {
+    public boolean delete(int identificador) {
+        boolean success = false;
         Session session = HibernateUtil.getSessionFactory().openSession();
+        Transaction transaction = null;
         try {
-            session.beginTransaction();
+            transaction = session.beginTransaction();
             T entidad = session.get(entityClass, identificador);
             if (entidad != null) {
                 session.delete(entidad);
                 session.getTransaction().commit();
                 System.out.println("Datos eliminados con éxito");
+                success = true;
             } else {
+                success = false;
                 System.out.println("No se encontró la entidad con el identificador: " + identificador);
+                if (transaction != null) {
+                    transaction.rollback();
+                }
             }
         } catch (Exception e) {
+            success = false;
             System.out.println("Error al eliminar datos: " + e);
         } finally {
             session.close();
         }
+        return success;
     }
 
     /**
      * Funcion que actualiza un modelo de una BBDD
      *
-     * @param entidad
+     * @param identificador
+     * @param updatedEntidad
+     * @return boolean
      */
-    public void update(int identificador, T updatedEntidad) {
+    public boolean update(int identificador, T updatedEntidad) {
+        boolean success = false;
         Session session = HibernateUtil.getSessionFactory().openSession();
         Transaction transaction = null;
         try {
@@ -128,8 +147,10 @@ public abstract class Model<T> {
                 //Actualiza la entidad con los nuevos valores que recibe como parametro
                 session.merge(updatedEntidad);
                 transaction.commit();
+                success = true;
                 System.out.println("Datos actualizados con éxito");
             } else {
+                success = false;
                 System.out.println("No se ha encontrado una entidad con identificador: " + identificador);
                 if (transaction != null) {
                     transaction.rollback();
@@ -137,12 +158,14 @@ public abstract class Model<T> {
             }
         } catch (Exception e) {
             System.out.println("Error al actualizar los datos: " + e);
+            success = false;
             if (transaction != null) {
                 transaction.rollback();
             }
         } finally {
             session.close();
         }
+        return success;
     }
 
 }
