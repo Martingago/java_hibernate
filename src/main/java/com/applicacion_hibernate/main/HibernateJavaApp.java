@@ -13,8 +13,9 @@ public class HibernateJavaApp {
         //new UsuarioController().createUsuario("Manuel", "fhfdgsgdg", "example@gmail.com");
         //new UsuarioController().createUsuario("Maria", "sdeoqopqdnffsf", "example02@gmail.com");
         new UsuarioController().listarUsuarios();
-        //new DireccionController().addDireccionUsuario(7, "Calle inventada editada", "10A", 12506, "A coruña", "España");
-        //new DireccionController().addDireccionUsuario(8, "Calle inventada editada", "12A", 12506, "A coruña", "España");
+        //new DireccionController().listarDirecciones();
+        //new DireccionController().addDireccionUsuario(2, "Calle inventada", "10A", 12506, "A coruña", "España");
+        //new DireccionController().addDireccionUsuario(5, "Calle inventada editada", "12A", 12506, "A coruña", "España");
         //new DireccionController().deleteDireccionUsuario(3);
         //new DireccionController().deleteDireccionUsuario(6);
         //new UsuarioController().deleteUsuario(4);

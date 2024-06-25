@@ -1,6 +1,5 @@
 package com.applicacion_hibernate.entidades;
 
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -10,20 +9,19 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
-import org.hibernate.annotations.DynamicUpdate;
+import java.io.Serializable;
 
 @Entity
-@DynamicUpdate
 @Table(name = "usuarios_direccion")
-public class Direccion {
+public class Direccion implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_direccion")
-    private int identificador;
-    
+    private int id;
+
     @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="id_usuario", referencedColumnName = "id_usuario")
+    @JoinColumn(name = "id_usuario")
     private Usuario usuario;
 
     @Column(name = "direccion")
@@ -33,31 +31,39 @@ public class Direccion {
     private String numero;
 
     @Column(name = "cod_postal")
-    private int cod_postal;
+    private int codPostal;
 
     @Column(name = "provincia")
     private String provincia;
 
     @Column(name = "pais")
     private String pais;
-    
+
     public Direccion() {
     }
 
-    public Direccion(String direccion, String numero, int cod_postal, String provincia, String pais) {
+    public Direccion(String direccion, String numero, int codPostal, String provincia, String pais) {
         this.direccion = direccion;
         this.numero = numero;
-        this.cod_postal = cod_postal;
+        this.codPostal = codPostal;
         this.provincia = provincia;
         this.pais = pais;
     }
 
-    public int getIdentificador() {
-        return identificador;
+    public int getId() {
+        return id;
     }
 
-    public void setIdentificador(int identificador) {
-        this.identificador = identificador;
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
     }
 
     public String getDireccion() {
@@ -76,12 +82,12 @@ public class Direccion {
         this.numero = numero;
     }
 
-    public int getCod_postal() {
-        return cod_postal;
+    public int getCodPostal() {
+        return codPostal;
     }
 
-    public void setCod_postal(int cod_postal) {
-        this.cod_postal = cod_postal;
+    public void setCodPostal(int codPostal) {
+        this.codPostal = codPostal;
     }
 
     public String getProvincia() {
@@ -100,26 +106,15 @@ public class Direccion {
         this.pais = pais;
     }
 
-    public Usuario getUsuario() {
-        return usuario;
-    }
-
-    public void setUsuario(Usuario usuario) {
-        this.usuario = usuario;
-    }
-    
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append("Direccion{");
-        sb.append("identificador=").append(identificador);
-        sb.append(", direccion=").append(direccion);
-        sb.append(", numero=").append(numero);
-        sb.append(", cod_postal=").append(cod_postal);
-        sb.append(", provincia=").append(provincia);
-        sb.append(", pais=").append(pais);
-        sb.append('}');
-        return sb.toString();
+        return "Direccion{" +
+                "id=" + id +
+                ", direccion='" + direccion + '\'' +
+                ", numero='" + numero + '\'' +
+                ", codPostal=" + codPostal +
+                ", provincia='" + provincia + '\'' +
+                ", pais='" + pais + '\'' +
+                '}';
     }
-
 }

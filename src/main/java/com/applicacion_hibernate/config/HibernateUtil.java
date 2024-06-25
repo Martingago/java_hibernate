@@ -21,12 +21,12 @@ public class HibernateUtil {
         try {
             Configuration configuration = new Configuration();
             configuration.configure("hibernate.cfg.xml");
-            List<Class<?>> annotatedClass = List.of(Usuario.class, Direccion.class);
-
-            //Se añaden todas los modelos <mapping> existentes en la aplicación
-            for (Class<?> map : annotatedClass) {
-                configuration.addAnnotatedClass(map);
-            }
+//            List<Class<?>> annotatedClass = List.of(Usuario.class, Direccion.class);
+//
+//            //Se añaden todas los modelos <mapping> existentes en la aplicación
+//            for (Class<?> map : annotatedClass) {
+//                configuration.addAnnotatedClass(map);
+//            }
 
             return configuration.buildSessionFactory();
 

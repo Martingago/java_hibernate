@@ -7,49 +7,49 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
+import java.io.Serializable;
 import java.util.Date;
 import org.hibernate.annotations.DynamicUpdate;
 
 @Entity
 @DynamicUpdate
 @Table(name = "usuarios")
-public class Usuario {
+public class Usuario implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_usuario")
     private int id;
-    
+
     @Column(name = "user_name")
     private String username;
-    
+
     @Column(name = "user_password")
     private String password;
-    
+
     @Column(name = "user_email")
     private String email;
-    
-    @Column(name = "user_date_creation")
-    private Date fecha_creacion;
-    
-    @Column(name = "user_last_connection")
-    private Date ultima_sesion;
 
-    @OneToOne(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    @Column(name = "user_date_creation")
+    private Date fechaCreacion;
+
+    @Column(name = "user_last_connection")
+    private Date ultimaSesion;
+
+    @OneToOne(mappedBy = "usuario", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Direccion direccion;
 
-    public Usuario(String username, String password, String email, Date fecha_creacion, Date ultima_sesion) {
+    public Usuario() {
+    }
+
+    public Usuario(String username, String password, String email, Date fechaCreacion, Date ultimaSesion) {
         this.username = username;
         this.password = password;
         this.email = email;
-        this.fecha_creacion = fecha_creacion;
-        this.ultima_sesion = ultima_sesion;
-    }
-
-    public Usuario() {
+        this.fechaCreacion = fechaCreacion;
+        this.ultimaSesion = ultimaSesion;
     }
 
     public int getId() {
@@ -84,20 +84,20 @@ public class Usuario {
         this.email = email;
     }
 
-    public Date getFecha_creacion() {
-        return fecha_creacion;
+    public Date getFechaCreacion() {
+        return fechaCreacion;
     }
 
-    public void setFecha_creacion(Date fecha_creacion) {
-        this.fecha_creacion = fecha_creacion;
+    public void setFechaCreacion(Date fechaCreacion) {
+        this.fechaCreacion = fechaCreacion;
     }
 
-    public Date getUltima_sesion() {
-        return ultima_sesion;
+    public Date getUltimaSesion() {
+        return ultimaSesion;
     }
 
-    public void setUltima_sesion(Date ultima_sesion) {
-        this.ultima_sesion = ultima_sesion;
+    public void setUltimaSesion(Date ultimaSesion) {
+        this.ultimaSesion = ultimaSesion;
     }
 
     public Direccion getDireccion() {
@@ -107,10 +107,16 @@ public class Usuario {
     public void setDireccion(Direccion direccion) {
         this.direccion = direccion;
     }
-    
+
     @Override
     public String toString() {
-        return "Usuario{" + "id=" + id + ", username=" + username + ", password=" + password + ", email=" + email + ", fecha_creacion=" + fecha_creacion + ", ultima_sesion=" + ultima_sesion +'}';
+        return "Usuario{" +
+                "id=" + id +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", email='" + email + '\'' +
+                ", fechaCreacion=" + fechaCreacion +
+                ", ultimaSesion=" + ultimaSesion +
+                '}';
     }
-
 }

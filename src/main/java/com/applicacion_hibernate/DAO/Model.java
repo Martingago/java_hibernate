@@ -1,6 +1,7 @@
 package com.applicacion_hibernate.DAO;
 
 import com.applicacion_hibernate.config.HibernateUtil;
+import com.applicacion_hibernate.entidades.Usuario;
 import java.util.List;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -19,6 +20,13 @@ public abstract class Model<T> {
         this.entityClass = entityClass;
     }
 
+        public List<T> getAll() {
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        List<T> entities = session.createQuery("FROM " + entityClass.getName(), entityClass).getResultList();
+        session.close();
+        return entities;
+    }
+    
     /**
      * Funcion que devuelve una lista con los elementos de una Base de datos
      *
@@ -31,6 +39,7 @@ public abstract class Model<T> {
         String hql = "FROM " + entityClass.getSimpleName();
         Query<T> query = session.createQuery(hql, entityClass);
         entidades = query.getResultList();
+        
     } catch (Exception e) {
         System.out.println("Error al listar las entidades \n" + e);
     } finally {
