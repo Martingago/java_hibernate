@@ -39,7 +39,7 @@ public class Usuario implements IdentificadorInterface {
     private Date ultimaSesion;
 
     
-    @OneToOne(mappedBy = "usuario", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToOne(mappedBy = "usuario", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
     private Direccion direccion;
 
     public Usuario() {

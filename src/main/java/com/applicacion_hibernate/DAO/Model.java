@@ -1,7 +1,6 @@
 package com.applicacion_hibernate.DAO;
 
 import com.applicacion_hibernate.config.HibernateUtil;
-import com.applicacion_hibernate.entidades.Usuario;
 import java.util.List;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -9,7 +8,6 @@ import org.hibernate.query.Query;
 
 public abstract class Model<T> {
 
-    //https://www.youtube.com/watch?v=9Z0Os9w_VMY
     /**
      * Constructor que recibe como parametro la entidad a la que debe aludir en
      * la Base de datos para realizar las operaciones CRUD

@@ -1,10 +1,13 @@
 package com.applicacion_hibernate.controller;
 
 import com.applicacion_hibernate.DAO.Model;
+import com.applicacion_hibernate.config.HibernateUtil;
 import com.applicacion_hibernate.entidades.Direccion;
 import com.applicacion_hibernate.entidades.Usuario;
 import java.util.List;
 import org.hibernate.Hibernate;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
 
 public class DireccionController {
 
@@ -36,50 +39,93 @@ public class DireccionController {
      * @param pais
      */
     public void addDireccionUsuario(int idUsuario, String direccion, String numero, int cod_postal, String provincia, String pais) {
-        // Crea una nueva dirección
-        Direccion dataDireccion = new Direccion(direccion, numero, cod_postal, provincia, pais);
-
+        //Se crea un objeto direccion con la informacion introducida por el 
+        Direccion direccionData = new Direccion(direccion, numero, cod_postal, provincia, pais);
+        Transaction tx = null;
+        Session session = null;
         try {
-            Usuario dataUsuario = usuarioModel.get(idUsuario);
+            session = HibernateUtil.getSessionFactory().openSession();
+            tx = session.beginTransaction();
+
+            // Obtener el usuario por su ID
+            Usuario dataUsuario = session.get(Usuario.class, idUsuario);
+
             if (dataUsuario != null) {
-                Direccion checkDireccion = dataUsuario.getDireccion(); // Comprueba si el usuario tiene una dirección asociada
+                Direccion checkDireccion = dataUsuario.getDireccion(); // Acceder a la dirección (propiedad perezosa)
 
                 if (checkDireccion != null) {
+                    // Si el usuario ya tiene una dirección, actualizar los datos
                     System.out.println("Actualizando datos de dirección existente");
-                    direccionModel.update(idUsuario, dataDireccion);
+                    checkDireccion.setDireccion(direccion);
+                    checkDireccion.setNumero(numero);
+                    checkDireccion.setCodPostal(cod_postal);
+                    checkDireccion.setProvincia(provincia);
+                    checkDireccion.setPais(pais);
+                    session.merge(checkDireccion); // Actualizar la dirección en la base de datos
                 } else {
+                    // Si el usuario no tiene dirección, crear una nueva dirección y asociarla
                     System.out.println("Creando nueva dirección para el usuario");
-                    dataDireccion.setUsuario(dataUsuario); // Establece la referencia al usuario
-                    // Guarda la nueva dirección en la base de datos
-                    direccionModel.add(dataDireccion); 
-                    System.out.println("Dirección añadida con éxito al usuario");
+                    Direccion nuevaDireccion = new Direccion(direccion, numero, cod_postal, provincia, pais);
+                    nuevaDireccion.setUsuario(dataUsuario); // Establecer la relación con el usuario
+                    session.persist(nuevaDireccion); // Guardar la nueva dirección en la base de datos
+                    dataUsuario.setDireccion(nuevaDireccion); // Actualizar la dirección en el usuario
+                    session.merge(dataUsuario); // Actualizar el usuario en la base de datos
+                }
+                System.out.println("Dirección añadida o actualizada con éxito para el usuario con ID: " + idUsuario);
+            } else {
+                System.out.println("No se encontró un usuario con identificador: " + idUsuario);
+            }
+
+            tx.commit();
+        } catch (Exception e) {
+            if (tx != null) {
+                tx.rollback();
+            }
+            System.out.println("Error al añadir o actualizar la dirección: " + e.getMessage());
+        } finally {
+            if (session != null) {
+                session.close();
+            }
+        }
+    }
+
+    /**
+     * Funcion que elimina la direccion de un usuario especificado
+     *
+     * @param idUsuario
+     */
+    public void deleteDireccionUsuario(int idUsuario) {
+        Transaction tx = null;
+        Session session = null;
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
+            tx = session.beginTransaction();
+
+            Usuario dataUsuario = session.get(Usuario.class, idUsuario);
+            System.out.println("datos usuario eliminar:" + dataUsuario.toString());
+
+            if (dataUsuario != null) {
+                Hibernate.initialize(dataUsuario.getDireccion());
+                Direccion checkDireccion = dataUsuario.getDireccion();
+                if (checkDireccion != null) {
+                    dataUsuario.setDireccion(null); //Se desasocia la direccion del usuario
+                    session.delete(checkDireccion);
+                    System.out.println("Direccion eliminada con éxito");
+                } else {
+                    System.out.println("El usuario con id " + idUsuario + " no tiene asociada una direccion");
                 }
             } else {
                 System.out.println("No se ha encontrado un usuario con identificador: " + idUsuario);
             }
-        } catch (Exception e) {
-            System.out.println("Error al añadir la dirección: " + e);
-        }
-    }
 
-    public void deleteDireccionUsuario(int idUsuario) {
-        try {
-            Usuario dataUsuario = usuarioModel.get(idUsuario);
-            System.out.println("datos usuario eliminar:" + dataUsuario.toString());
-            
-            if (dataUsuario != null) {
-                Hibernate.initialize(dataUsuario.getDireccion());
-                //Direccion checkDireccion = dataUsuario.getDireccion();
-//                if (checkDireccion != null) {
-//                    direccionModel.delete(checkDireccion.getId()); //Se elimina aquella direccion con el ID correspondiente
-//                } else {
-//                    System.out.println("El usuario con id " + idUsuario + " no tiene asociada una direccion");
-//                }
-            } else {
-                System.out.println("No se ha encontrado un usuario con identificador: " + idUsuario);
-            }
+            tx.commit();
         } catch (Exception e) {
-            System.out.println("Error" + e);
+            if (tx != null) {
+                tx.rollback();
+            }
+            System.out.println("Error \n" + e);
+        } finally {
+            session.close();
         }
     }
 
