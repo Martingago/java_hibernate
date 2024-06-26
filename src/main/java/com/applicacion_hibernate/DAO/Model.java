@@ -20,34 +20,33 @@ public abstract class Model<T> {
         this.entityClass = entityClass;
     }
 
-        public List<T> getAll() {
+    public List<T> getAll() {
         Session session = HibernateUtil.getSessionFactory().openSession();
         List<T> entities = session.createQuery("FROM " + entityClass.getName(), entityClass).getResultList();
         session.close();
         return entities;
     }
-    
+
     /**
      * Funcion que devuelve una lista con los elementos de una Base de datos
      *
      * @return
      */
-   public List<T> listar() {
-    List<T> entidades = null;
-    Session session = HibernateUtil.getSessionFactory().openSession();
-    try {
-        String hql = "FROM " + entityClass.getSimpleName();
-        Query<T> query = session.createQuery(hql, entityClass);
-        entidades = query.getResultList();
-        
-    } catch (Exception e) {
-        System.out.println("Error al listar las entidades \n" + e);
-    } finally {
-        session.close();
-    }
-    return entidades;
-}
+    public List<T> listar() {
+        List<T> entidades = null;
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        try {
+            String hql = "FROM " + entityClass.getSimpleName();
+            Query<T> query = session.createQuery(hql, entityClass);
+            entidades = query.getResultList();
 
+        } catch (Exception e) {
+            System.out.println("Error al listar las entidades \n" + e);
+        } finally {
+            session.close();
+        }
+        return entidades;
+    }
 
     /**
      * Obtiene los datos de una entidad en especifico de la base de datos
@@ -153,12 +152,18 @@ public abstract class Model<T> {
             transaction = session.beginTransaction();
             T oldEntidad = session.get(entityClass, identificador);
             if (oldEntidad != null) {
+                // Verificar si updatedEntidad implementa la interfaz Identificable
+                if (updatedEntidad instanceof IdentificadorInterface) {
+                    IdentificadorInterface identificableEntidad = (IdentificadorInterface) updatedEntidad;
+                    identificableEntidad.setId(identificador);
+                }
                 //Actualiza la entidad con los nuevos valores que recibe como parametro
                 session.merge(updatedEntidad);
                 transaction.commit();
                 success = true;
                 System.out.println("Datos actualizados con éxito");
-            } else {
+            }
+            if (oldEntidad == null) {
                 success = false;
                 System.out.println("No se ha encontrado una entidad con identificador: " + identificador);
                 if (transaction != null) {

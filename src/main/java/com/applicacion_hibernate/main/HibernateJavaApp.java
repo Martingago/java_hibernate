@@ -1,7 +1,9 @@
 package com.applicacion_hibernate.main;
 
 import com.applicacion_hibernate.controller.DireccionController;
+import com.applicacion_hibernate.controller.MarcaController;
 import com.applicacion_hibernate.controller.UsuarioController;
+import com.applicacion_hibernate.entidades.Marca;
 import com.applicacion_hibernate.entidades.Usuario;
 import java.util.Date;
 
@@ -16,10 +18,18 @@ public class HibernateJavaApp {
 //        new UsuarioController().createUsuario("Maria", "xvdgjd", "example05@gmail.com");
 //        new DireccionController().addDireccionUsuario(2, "Calle Santiago", "10A", 12506, "A coruña", "España");
 //        new DireccionController().addDireccionUsuario(4, "Calle Senrra", "12A", 12506, "A coruña", "España");
-        new UsuarioController().listarUsuarios();
+        //new UsuarioController().listarUsuarios();
         //new DireccionController().listarDirecciones();
+        //new MarcaController().addMarca("inventada", "Nueva marca añadida inventada");
+        //new MarcaController().deleteMarca(19);
+        //new MarcaController().updateMarca(17, new Marca("Cambio cosasss", "Cambio desscripcion"));
         
-        //new DireccionController().deleteDireccionUsuario(3);
+        //new MarcaController().listarMarcas();
+        new DireccionController().deleteDireccionUsuario(3);
+        //new DireccionController().addDireccionUsuario(3, "editada", "12", 0, "editada", "inentado");
+        new DireccionController().listarDirecciones();
+
+        
         //new DireccionController().deleteDireccionUsuario(6);
         //new UsuarioController().deleteUsuario(4);
         

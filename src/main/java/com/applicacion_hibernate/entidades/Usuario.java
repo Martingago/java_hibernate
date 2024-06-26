@@ -1,5 +1,6 @@
 package com.applicacion_hibernate.entidades;
 
+import com.applicacion_hibernate.DAO.IdentificadorInterface;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -9,35 +10,32 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
-import java.io.Serializable;
 import java.util.Date;
 import org.hibernate.annotations.DynamicUpdate;
-import org.hibernate.annotations.LazyToOne;
-import org.hibernate.annotations.LazyToOneOption;
 
 @Entity
 @DynamicUpdate
 @Table(name = "usuarios")
-public class Usuario implements Serializable {
+public class Usuario implements IdentificadorInterface {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_usuario")
     private int id;
 
-    @Column(name = "user_name")
+    @Column(name = "username")
     private String username;
 
     @Column(name = "user_password")
     private String password;
 
-    @Column(name = "user_email")
+    @Column(name = "email")
     private String email;
 
-    @Column(name = "user_date_creation")
+    @Column(name = "date_creation")
     private Date fechaCreacion;
 
-    @Column(name = "user_last_connection")
+    @Column(name = "last_connection")
     private Date ultimaSesion;
 
     
@@ -55,10 +53,12 @@ public class Usuario implements Serializable {
         this.ultimaSesion = ultimaSesion;
     }
 
+    @Override
     public int getId() {
         return id;
     }
 
+    @Override
     public void setId(int id) {
         this.id = id;
     }

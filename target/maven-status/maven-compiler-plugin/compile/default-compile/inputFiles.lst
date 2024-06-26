@@ -2,6 +2,11 @@ C:\Users\Angeles\Desktop\DAM\WEBS\WEB\java_hibernate\src\main\java\com\applicaci
 C:\Users\Angeles\Desktop\DAM\WEBS\WEB\java_hibernate\src\main\java\com\applicacion_hibernate\entidades\Direccion.java
 C:\Users\Angeles\Desktop\DAM\WEBS\WEB\java_hibernate\src\main\java\com\applicacion_hibernate\controller\DireccionController.java
 C:\Users\Angeles\Desktop\DAM\WEBS\WEB\java_hibernate\src\main\java\com\applicacion_hibernate\controller\UsuarioController.java
+C:\Users\Angeles\Desktop\DAM\WEBS\WEB\java_hibernate\src\main\java\com\applicacion_hibernate\entidades\Categoria.java
+C:\Users\Angeles\Desktop\DAM\WEBS\WEB\java_hibernate\src\main\java\com\applicacion_hibernate\entidades\Marca.java
+C:\Users\Angeles\Desktop\DAM\WEBS\WEB\java_hibernate\src\main\java\com\applicacion_hibernate\DAO\IdentificadorInterface.java
+C:\Users\Angeles\Desktop\DAM\WEBS\WEB\java_hibernate\src\main\java\com\applicacion_hibernate\controller\MarcaController.java
 C:\Users\Angeles\Desktop\DAM\WEBS\WEB\java_hibernate\src\main\java\com\applicacion_hibernate\DAO\Model.java
+C:\Users\Angeles\Desktop\DAM\WEBS\WEB\java_hibernate\src\main\java\com\applicacion_hibernate\entidades\Producto.java
 C:\Users\Angeles\Desktop\DAM\WEBS\WEB\java_hibernate\src\main\java\com\applicacion_hibernate\entidades\Usuario.java
 C:\Users\Angeles\Desktop\DAM\WEBS\WEB\java_hibernate\src\main\java\com\applicacion_hibernate\main\HibernateJavaApp.java

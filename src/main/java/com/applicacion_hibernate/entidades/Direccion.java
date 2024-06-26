@@ -1,5 +1,6 @@
 package com.applicacion_hibernate.entidades;
 
+import com.applicacion_hibernate.DAO.IdentificadorInterface;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -10,13 +11,10 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
-import java.io.Serializable;
-import org.hibernate.annotations.LazyToOne;
-import org.hibernate.annotations.LazyToOneOption;
 
 @Entity
 @Table(name = "usuarios_direccion")
-public class Direccion implements Serializable {
+public class Direccion implements IdentificadorInterface {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -53,10 +51,12 @@ public class Direccion implements Serializable {
         this.pais = pais;
     }
 
+    @Override
     public int getId() {
         return id;
     }
 
+    @Override
     public void setId(int id) {
         this.id = id;
     }

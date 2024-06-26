@@ -1,44 +1,38 @@
 package com.applicacion_hibernate.controller;
 
 import com.applicacion_hibernate.DAO.Model;
-import com.applicacion_hibernate.config.HibernateUtil;
 import com.applicacion_hibernate.entidades.Usuario;
 import java.util.Date;
 import java.util.List;
-import org.hibernate.Session;
-import org.hibernate.query.Query;
 
 public class UsuarioController {
 
     private final Model<Usuario> usuarioModel = new Model<>(Usuario.class) {
     };
 
-public void listarUsuarios() {
-   
+    public void listarUsuarios() {
         try {
             List<Usuario> usuarios = usuarioModel.getAll();
             for (Usuario usuario : usuarios) {
                 System.out.println(usuario.toString());
-                // Asegúrate de no acceder a usuario.getDireccion() aquí
             }
         } catch (Exception e) {
             System.out.println("Error al listar usuarios: " + e);
         }
-   
-}
+    }
 
-    
     /**
      * Crea un usuario con los parámetros indicados en la Base de datos
+     *
      * @param username
      * @param password
-     * @param email 
+     * @param email
      */
     public void createUsuario(String username, String password, String email) {
         Usuario newUsuario = new Usuario(username, password, email, new Date(), new Date());
         usuarioModel.add(newUsuario);
     }
-    
+
     /**
      * Actualiza los datos de un usurio especificado
      *

@@ -13,8 +13,5 @@
         <property name="hibernate.use_sql_comments">true</property>
         <property name="hibernate.hbm2ddl.auto">update</property>
 
-        <!-- Mapeo de clases de entidades -->
-        <mapping class="com.applicacion_hibernate.entidades.Usuario"/>
-        <mapping class="com.applicacion_hibernate.entidades.Direccion"/>
     </session-factory>
 </hibernate-configuration>
