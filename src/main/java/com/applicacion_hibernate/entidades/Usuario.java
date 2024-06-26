@@ -12,6 +12,8 @@ import jakarta.persistence.Table;
 import java.io.Serializable;
 import java.util.Date;
 import org.hibernate.annotations.DynamicUpdate;
+import org.hibernate.annotations.LazyToOne;
+import org.hibernate.annotations.LazyToOneOption;
 
 @Entity
 @DynamicUpdate
@@ -38,6 +40,7 @@ public class Usuario implements Serializable {
     @Column(name = "user_last_connection")
     private Date ultimaSesion;
 
+    
     @OneToOne(mappedBy = "usuario", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Direccion direccion;
 
