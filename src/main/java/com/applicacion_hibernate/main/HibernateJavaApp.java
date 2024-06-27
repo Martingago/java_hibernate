@@ -5,6 +5,7 @@ import com.applicacion_hibernate.controller.MarcaController;
 import com.applicacion_hibernate.controller.ProductoController;
 import com.applicacion_hibernate.controller.UsuarioController;
 import com.applicacion_hibernate.entidades.Marca;
+import com.applicacion_hibernate.entidades.Producto;
 import com.applicacion_hibernate.entidades.Usuario;
 import java.util.Date;
 
@@ -34,9 +35,10 @@ public class HibernateJavaApp {
 
         //mc.deleteMarca(4);
         //pc.listarProductos();
-        //pc.addProduct("Nuevo producto", "Descripcion de mi producto añadido", 154.23, 23, 4);
-        //pc.addProduct("Nuevo producto", "Descripcion de mi producto añadido", 154.23, 23, 4);
-        //pc.addProduct("Nuevo producto", "Descripcion de mi producto añadido", 154.23, 23, 4);
+        //pc.addProduct("Nuevo producto", "Descripcion de mi producto añadido", 154.23, 23, 3);
+        //pc.addProduct("Nuevo producto", "Descripcion de mi producto añadido", 154.23, 23, 3);
+        //pc.addProduct("Nuevo producto", "Descripcion de mi producto añadido", 154.23, 23, 3);
+        //pc.updateProductInfo(15, "Nombre actualizado actualizado", "decripcion actualizada", 1999.9, 23, 2);
         pc.listFullProductInfo();
         
 

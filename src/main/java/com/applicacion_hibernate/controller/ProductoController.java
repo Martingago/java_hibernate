@@ -14,7 +14,7 @@ public class ProductoController {
     private final Model<Producto> productoModel = new Model<>(Producto.class){};
 
     /**
-     * Lista los productos existentes en la base de datos
+     * Lista  de forma simple los productos existentes en la base de datos
      */
     public void listarProductos(){
         List<Producto> productos = productoModel.listar();
@@ -24,6 +24,9 @@ public class ProductoController {
         }
     }
 
+    /**
+     * Lista de forma completa los productos y detalles especificos (Marca) procedentes de la base de datos
+     */
     public void listFullProductInfo(){
         String hql = "SELECT p FROM Producto p JOIN FETCH p.marca";
 
@@ -69,6 +72,69 @@ public class ProductoController {
                 session.close();
             }
         }
+    }
+
+    /**
+     * Actualiza los datos de un producto con un identificador especificado
+     * @param identificador
+     * @param nombre
+     * @param descripcion
+     * @param precio
+     * @param stock
+     * @param id_marca
+     */
+    public void updateProductInfo(int identificador, String nombre, String descripcion, double precio, int stock, int id_marca){
+        Transaction tx = null;
+        Session session = null;
+
+        try {
+
+            session = HibernateUtil.getSessionFactory().openSession();
+            tx = session.beginTransaction();
+
+            //Se obtiene los datos del produto a través de su id:
+            Producto oldP = session.get(Producto.class, identificador);
+            if(oldP == null){
+                System.out.println("No se ha encontrado un producto con identificador: "+ identificador);
+                return;
+            }
+            //Se busca el identificador de la marca para ver si la nueva marca existe:
+            Marca oldM = session.get(Marca.class, id_marca);
+            if(oldM == null){
+                System.out.println("No se ha encontrado una marca con el identificador: " + id_marca);
+                return;
+            }
+
+            //Se actualizan los datos del producto:
+            oldP.setNombre(nombre);
+            oldP.setPrecio(precio);
+            oldP.setStock(stock);
+            oldP.setDescripcion(descripcion);
+            oldP.setMarca(oldM);
+
+            //Se actualizan y guarda la transaccion
+            session.merge(oldP);
+            tx.commit();
+
+        }catch (Exception e){
+            if(tx != null){
+                tx.rollback();
+            }
+            System.out.println("Se ha producido un error inesperado: " + e);
+
+        }finally {
+        if(session != null){
+            session.close();
+        }
+        }
+    }
+
+    /**
+     * Elimina un producto de la base de datos
+     * @param identificador
+     */
+    public void deleteProduct(int identificador){
+        productoModel.delete(identificador);
     }
 
 }
