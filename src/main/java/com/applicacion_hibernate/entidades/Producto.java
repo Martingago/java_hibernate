@@ -33,7 +33,7 @@ public class Producto  implements IdentificadorInterface{
     @Column(name="stock")
     private int stock;
     
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="id_marca", referencedColumnName = "id_marca")
     private Marca marca;
 
@@ -99,7 +99,7 @@ public class Producto  implements IdentificadorInterface{
 
     @Override
     public String toString() {
-        return "Producto{" + "id=" + id + ", nombre=" + nombre + ", descripcion=" + descripcion + ", precio=" + precio + ", stock=" + stock + ", marca=" + marca + '}';
+        return "Producto{" + "id=" + id + ", nombre=" + nombre + ", descripcion=" + descripcion + ", precio=" + precio + ", stock=" + stock + '}';
     }
 
 }

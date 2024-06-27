@@ -1,15 +1,10 @@
 package com.applicacion_hibernate.entidades;
 
 import com.applicacion_hibernate.DAO.IdentificadorInterface;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
+
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "marcas")
@@ -26,8 +21,8 @@ public class Marca implements IdentificadorInterface {
     @Column(name = "descripcion")
     private String descripcion;
 
-    @OneToMany(mappedBy = "marca" , fetch = FetchType.LAZY) // Indicamos que la relación está mapeada por el atributo 'marca' de Producto
-    private List<Producto> productos; // Lista de productos pertenecientes a esta marca
+    @OneToMany(mappedBy = "marca" , fetch = FetchType.LAZY, cascade = CascadeType.ALL) // Indicamos que la relación está mapeada por el atributo 'marca' de Producto
+    private Set<Producto> productos; // Lista de productos pertenecientes a esta marca
             
     public Marca(String nombre, String descripcion) {
         this.nombre = nombre;

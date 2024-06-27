@@ -12,7 +12,7 @@ public class UsuarioController {
 
     public void listarUsuarios() {
         try {
-            List<Usuario> usuarios = usuarioModel.getAll();
+            List<Usuario> usuarios = usuarioModel.listar();
             for (Usuario usuario : usuarios) {
                 System.out.println(usuario.toString());
             }

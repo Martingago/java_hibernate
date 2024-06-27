@@ -18,13 +18,6 @@ public abstract class Model<T> {
         this.entityClass = entityClass;
     }
 
-    public List<T> getAll() {
-        Session session = HibernateUtil.getSessionFactory().openSession();
-        List<T> entities = session.createQuery("FROM " + entityClass.getName(), entityClass).getResultList();
-        session.close();
-        return entities;
-    }
-
     /**
      * Funcion que devuelve una lista con los elementos de una Base de datos
      *
@@ -42,6 +35,31 @@ public abstract class Model<T> {
             System.out.println("Error al listar las entidades \n" + e);
         } finally {
             session.close();
+        }
+        return entidades;
+    }
+
+    public List<T> joinList(String hql){
+        List<T> entidades = null;
+        Transaction tx = null;
+        Session session = null;
+
+        try{
+            session = HibernateUtil.getSessionFactory().openSession();
+            tx = session.beginTransaction();
+            //Se realiza consulta de la query pasada como parámetro
+            Query<T> query = session.createQuery(hql, entityClass);
+            entidades = query.getResultList();
+            tx.commit();
+        }catch (Exception e){
+            if (tx != null) {
+                tx.rollback();
+            }
+            System.out.println("Error al listar entidades" + e);
+        }finally {
+            if (session != null) {
+                session.close();
+            }
         }
         return entidades;
     }
