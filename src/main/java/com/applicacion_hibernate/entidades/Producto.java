@@ -37,6 +37,8 @@ public class Producto  implements IdentificadorInterface{
     @JoinColumn(name="id_marca", referencedColumnName = "id_marca")
     private Marca marca;
 
+
+
     public Producto(String nombre, String descripcion, double precio, int stock) {
         this.nombre = nombre;
         this.descripcion = descripcion;

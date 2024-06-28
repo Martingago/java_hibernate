@@ -1,3 +1,4 @@
+DROP TABLE IF EXISTS pedidos_productos;
 DROP TABLE IF EXISTS productos;
 DROP TABLE IF EXISTS marcas;
 DROP TABLE IF EXISTS categorias;
@@ -5,9 +6,7 @@ DROP TABLE IF EXISTS usuarios_direccion;
 DROP TABLE IF EXISTS pedidos;
 DROP TABLE  IF EXISTS usuarios;
 
-
- 
- CREATE TABLE IF NOT EXISTS usuarios(
+CREATE TABLE IF NOT EXISTS usuarios(
 id_usuario INT(20) AUTO_INCREMENT PRIMARY KEY,
 username varchar(20) NOT NULL,
 user_password varchar(200) NOT NULL,
@@ -70,7 +69,20 @@ REFERENCES categorias(id_categoria)
 ON DELETE CASCADE
 );
 
+CREATE TABLE IF NOT EXISTS pedidos_productos(
+id_pedido int(20),
+id_producto int(20),
+cantidad int(5),
+precio double(8,2),
+subtotal double(8,2),
 
+CONSTRAINT fk_id_pedido_pedidos_producto FOREIGN KEY (id_pedido)
+REFERENCES pedidos(id_pedido)
+ON DELETE CASCADE,
+
+CONSTRAINT fk_id_producto_pedidos_producto FOREIGN KEY (id_producto)
+REFERENCES productos(id_producto)
+);
 
 
 

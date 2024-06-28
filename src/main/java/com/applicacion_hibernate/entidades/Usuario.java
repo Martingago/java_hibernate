@@ -1,16 +1,12 @@
 package com.applicacion_hibernate.entidades;
 
 import com.applicacion_hibernate.DAO.IdentificadorInterface;
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToOne;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
+
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
+
 import org.hibernate.annotations.DynamicUpdate;
 
 @Entity
@@ -38,9 +34,11 @@ public class Usuario implements IdentificadorInterface {
     @Column(name = "last_connection")
     private Date ultimaSesion;
 
-    
     @OneToOne(mappedBy = "usuario", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
     private Direccion direccion;
+
+    @OneToMany(mappedBy = "usuario", fetch = FetchType.LAZY)
+    private Set<Pedido> pedidos = new HashSet<>();
 
     public Usuario() {
     }
@@ -109,6 +107,14 @@ public class Usuario implements IdentificadorInterface {
 
     public void setDireccion(Direccion direccion) {
         this.direccion = direccion;
+    }
+
+    public Set<Pedido> getPedido() {
+        return pedidos;
+    }
+
+    public void setPedido(Set<Pedido> pedidos) {
+        this.pedidos = pedidos;
     }
 
     @Override

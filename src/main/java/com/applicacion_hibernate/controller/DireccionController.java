@@ -125,7 +125,9 @@ public class DireccionController {
             }
             System.out.println("Error \n" + e);
         } finally {
-            session.close();
+            if(session != null){
+                session.close();
+            }
         }
     }
 

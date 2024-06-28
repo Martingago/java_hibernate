@@ -7,6 +7,8 @@ import com.applicacion_hibernate.controller.UsuarioController;
 import com.applicacion_hibernate.entidades.Marca;
 import com.applicacion_hibernate.entidades.Producto;
 import com.applicacion_hibernate.entidades.Usuario;
+import com.applicacion_hibernate.test.UsuariosTest;
+
 import java.util.Date;
 
 
@@ -17,6 +19,9 @@ public class HibernateJavaApp {
         DireccionController dc = new DireccionController();
         MarcaController mc = new MarcaController();
         ProductoController pc = new ProductoController();
+
+        UsuariosTest ut = new UsuariosTest();
+        ut.manageUsuarioFunctions();
 
         //uc.createUsuario("Manuel", "fhfdgsgdg", "example@gmail.com");
         //uc.createUsuario("Maria", "sdeoqopqdnffsf", "example02@gmail.com");
@@ -39,9 +44,10 @@ public class HibernateJavaApp {
         //pc.addProduct("Nuevo producto", "Descripcion de mi producto añadido", 154.23, 23, 3);
         //pc.addProduct("Nuevo producto", "Descripcion de mi producto añadido", 154.23, 23, 3);
         //pc.updateProductInfo(15, "Nombre actualizado actualizado", "decripcion actualizada", 1999.9, 23, 2);
-        pc.listFullProductInfo();
-        
+        //pc.listFullProductInfo();
+        //uc.listarPedidosUsuario(2);
 
-        //new UsuarioController().listarUsuarios();
+        //uc.listarUsuarios();
+
     }
 }
