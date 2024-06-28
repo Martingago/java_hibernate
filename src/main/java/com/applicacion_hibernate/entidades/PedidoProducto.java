@@ -5,12 +5,10 @@ import jakarta.persistence.*;
 
 @Entity
 @Table(name= "pedidos_productos")
-public class Pedidos_productos implements IdentificadorInterface {
+public class PedidoProducto{
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="id_pedido")
-    private int id;
+    @EmbeddedId
+    private PedidoProductoId id;
 
     @Column(name="cantidad")
     private int cantidad;
@@ -22,30 +20,30 @@ public class Pedidos_productos implements IdentificadorInterface {
     private double subtotal;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @MapsId("idPedido")
     @JoinColumn(name = "id_pedido")
     private Pedido pedido;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @MapsId("idProducto")
     @JoinColumn(name="id_producto")
     private Producto producto;
 
-    public Pedidos_productos(int id, int cantidad, double subtotal, double precio) {
-        this.id = id;
+    public PedidoProducto(int cantidad, double subtotal, double precio) {
         this.cantidad = cantidad;
         this.subtotal = subtotal;
         this.precio = precio;
     }
 
-    public Pedidos_productos() {
+    public PedidoProducto() {
     }
 
-    @Override
-    public int getId() {
+
+    public PedidoProductoId getId() {
         return id;
     }
 
-    @Override
-    public void setId(int id) {
+    public void setId(PedidoProductoId id) {
     this.id = id;
     }
 

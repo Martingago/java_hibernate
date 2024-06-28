@@ -4,6 +4,8 @@ import com.applicacion_hibernate.DAO.IdentificadorInterface;
 import jakarta.persistence.*;
 
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name="pedidos")
@@ -23,6 +25,9 @@ public class Pedido  implements IdentificadorInterface {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="id_usuario", referencedColumnName = "id_usuario")
     private Usuario usuario;
+
+    @OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    private Set<PedidoProducto> pedidosProductos = new HashSet<>();
 
     public Pedido(Date fecha_pedido, Date fecha_entrega, Usuario usuario) {
         this.fecha_pedido = fecha_pedido;
@@ -55,6 +60,14 @@ public class Pedido  implements IdentificadorInterface {
 
     public void setUsuario(Usuario usuario) {
         this.usuario = usuario;
+    }
+
+    public Set<PedidoProducto> getPedidosProductos() {
+        return pedidosProductos;
+    }
+
+    public void setPedidosProductos(Set<PedidoProducto> pedidosProductos) {
+        this.pedidosProductos = pedidosProductos;
     }
 
     @Override

@@ -21,7 +21,7 @@ public class HibernateUtil {
         try {
             Configuration configuration = new Configuration();
             configuration.configure("hibernate.cfg.xml");
-            List<Class<?>> annotatedClass = List.of(Usuario.class, Direccion.class, Marca.class, Producto.class, Pedido.class);
+            List<Class<?>> annotatedClass = List.of(Usuario.class, Direccion.class, Marca.class, Producto.class, Pedido.class, PedidoProducto.class);
 
             //Se añaden todas los modelos <mapping> existentes en la aplicación
             for (Class<?> map : annotatedClass) {
