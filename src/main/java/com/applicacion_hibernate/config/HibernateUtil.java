@@ -3,11 +3,18 @@ package com.applicacion_hibernate.config;
 import com.applicacion_hibernate.entidades.*;
 
 import java.util.List;
+
+import com.applicacion_hibernate.entidades.blog.Post;
+import com.applicacion_hibernate.entidades.blog.Tag;
 import org.hibernate.HibernateException;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
 public class HibernateUtil {
+
+
+    private final static List<Class<?>> listaClases = List.of(Usuario.class, Direccion.class, Marca.class,
+            Producto.class, Pedido.class, PedidoProducto.class, Post.class, Tag.class);
 
     private final static SessionFactory sessionFactory = buildSessionFactory();
 
@@ -21,10 +28,10 @@ public class HibernateUtil {
         try {
             Configuration configuration = new Configuration();
             configuration.configure("hibernate.cfg.xml");
-            List<Class<?>> annotatedClass = List.of(Usuario.class, Direccion.class, Marca.class, Producto.class, Pedido.class, PedidoProducto.class);
+
 
             //Se añaden todas los modelos <mapping> existentes en la aplicación
-            for (Class<?> map : annotatedClass) {
+            for (Class<?> map : listaClases) {
                 configuration.addAnnotatedClass(map);
             }
 

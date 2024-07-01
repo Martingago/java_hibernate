@@ -4,9 +4,11 @@ import com.applicacion_hibernate.controller.DireccionController;
 import com.applicacion_hibernate.controller.MarcaController;
 import com.applicacion_hibernate.controller.ProductoController;
 import com.applicacion_hibernate.controller.UsuarioController;
+import com.applicacion_hibernate.controller.blogController.PostController;
 import com.applicacion_hibernate.entidades.Marca;
 import com.applicacion_hibernate.entidades.Producto;
 import com.applicacion_hibernate.entidades.Usuario;
+import com.applicacion_hibernate.entidades.blog.Post;
 import com.applicacion_hibernate.test.UsuariosTest;
 
 import java.util.Date;
@@ -19,10 +21,15 @@ public class HibernateJavaApp {
         DireccionController dc = new DireccionController();
         MarcaController mc = new MarcaController();
         ProductoController pc = new ProductoController();
+        PostController postc = new PostController();
 
         UsuariosTest ut = new UsuariosTest();
-        ut.manageUsuarioFunctions();
+        //ut.manageUsuarioFunctions();
 
+
+        //postc.addPost(new Post("Titulo del post", "Descripcion del post", new Date()));
+        System.out.println(postc.getPost(1));
+        System.out.println(postc.getPost(2));
         //uc.createUsuario("Manuel", "fhfdgsgdg", "example@gmail.com");
         //uc.createUsuario("Maria", "sdeoqopqdnffsf", "example02@gmail.com");
 
