@@ -5,6 +5,7 @@ import com.applicacion_hibernate.entidades.*;
 import java.util.List;
 
 import com.applicacion_hibernate.entidades.blog.Post;
+import com.applicacion_hibernate.entidades.blog.PostDetails;
 import com.applicacion_hibernate.entidades.blog.Tag;
 import org.hibernate.HibernateException;
 import org.hibernate.SessionFactory;
@@ -14,7 +15,7 @@ public class HibernateUtil {
 
 
     private final static List<Class<?>> listaClases = List.of(Usuario.class, Direccion.class, Marca.class,
-            Producto.class, Pedido.class, PedidoProducto.class, Post.class, Tag.class);
+            Producto.class, Pedido.class, PedidoProducto.class, Post.class, Tag.class, PostDetails.class);
 
     private final static SessionFactory sessionFactory = buildSessionFactory();
 

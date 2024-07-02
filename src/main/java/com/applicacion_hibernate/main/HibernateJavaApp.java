@@ -27,9 +27,10 @@ public class HibernateJavaApp {
         //ut.manageUsuarioFunctions();
 
 
-        //postc.addPost(new Post("Titulo del post", "Descripcion del post", new Date()));
+        //postc.addPost(new Post("Titulo del post", "Descripcion del post"));
         System.out.println(postc.getPost(1));
-        System.out.println(postc.getPost(2));
+        postc.deletePost(1);
+        System.out.println(postc.getPost(1));
         //uc.createUsuario("Manuel", "fhfdgsgdg", "example@gmail.com");
         //uc.createUsuario("Maria", "sdeoqopqdnffsf", "example02@gmail.com");
 

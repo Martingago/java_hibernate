@@ -12,6 +12,7 @@ public class Post {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name="post_id")
     private int id;
 
     @Column(name="title")
@@ -19,9 +20,6 @@ public class Post {
 
     @Column(name = "content")
     private String content;
-
-    @Column(name="date_posted")
-    private Date date;
 
     @ManyToMany(fetch = FetchType.LAZY,
             cascade = {CascadeType.PERSIST, CascadeType.MERGE}
@@ -33,10 +31,9 @@ public class Post {
     )
     private Set<Tag> tags = new HashSet<>();;
 
-    public Post(String title, String content, Date date) {
+    public Post(String title, String content) {
         this.title = title;
         this.content = content;
-        this.date = date;
     }
 
     public Post(){}
@@ -78,14 +75,6 @@ public class Post {
         this.content = content;
     }
 
-    public Date getDate() {
-        return date;
-    }
-
-    public void setDate(Date date) {
-        this.date = date;
-    }
-
     public Set<Tag> getTags() {
         return tags;
     }
@@ -100,7 +89,7 @@ public class Post {
                 "id=" + id +
                 ", title='" + title + '\'' +
                 ", content='" + content + '\'' +
-                ", date=" + date +
                 '}';
     }
+
 }
