@@ -58,7 +58,6 @@ public class PostDetails {
         return "PostDetails{" +
                 "topic='" + topic + '\'' +
                 ", datePosted=" + datePosted +
-                ", post=" + post +
                 '}';
     }
 }

@@ -2,7 +2,7 @@ package com.applicacion_hibernate.entidades.blog;
 
 import jakarta.persistence.*;
 
-import java.util.Date;
+
 import java.util.HashSet;
 import java.util.Set;
 
@@ -12,7 +12,6 @@ public class Post {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="post_id")
     private int id;
 
     @Column(name="title")
@@ -29,7 +28,7 @@ public class Post {
             joinColumns = {@JoinColumn(name="post_id")},
             inverseJoinColumns = {@JoinColumn(name="tag_id")}
     )
-    private Set<Tag> tags = new HashSet<>();;
+    private Set<Tag> tags = new HashSet<>();
 
     public Post(String title, String content) {
         this.title = title;

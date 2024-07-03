@@ -22,12 +22,14 @@ public class Tag {
             cascade = {CascadeType.PERSIST, CascadeType.MERGE},
             mappedBy = "tags"
     )
-    private Set<Post> posts = new HashSet<>();;
+    private Set<Post> posts = new HashSet<>();
 
 
     public Tag(String name) {
         this.name = name;
     }
+
+    public Tag(){}
 
     public int getId() {
         return id;
@@ -57,8 +59,7 @@ public class Tag {
     public String toString() {
         return "Tag{" +
                 "id=" + id +
-                ", name='" + name + '\'' +
-                ", posts=" + posts +
+                ", name='" + name +
                 '}';
     }
 }

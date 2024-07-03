@@ -1,61 +1,30 @@
 package com.applicacion_hibernate.main;
 
-import com.applicacion_hibernate.controller.DireccionController;
-import com.applicacion_hibernate.controller.MarcaController;
-import com.applicacion_hibernate.controller.ProductoController;
-import com.applicacion_hibernate.controller.UsuarioController;
-import com.applicacion_hibernate.controller.blogController.PostController;
-import com.applicacion_hibernate.entidades.Marca;
-import com.applicacion_hibernate.entidades.Producto;
-import com.applicacion_hibernate.entidades.Usuario;
-import com.applicacion_hibernate.entidades.blog.Post;
-import com.applicacion_hibernate.test.UsuariosTest;
 
-import java.util.Date;
+import com.applicacion_hibernate.controller.blogController.BlogController;
+import com.applicacion_hibernate.controller.blogController.TagController;
+
+import com.applicacion_hibernate.entidades.blog.Tag;
+
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 
 
 public class HibernateJavaApp {
 
     public static void main(String[] args) {
-        UsuarioController uc = new UsuarioController();
-        DireccionController dc = new DireccionController();
-        MarcaController mc = new MarcaController();
-        ProductoController pc = new ProductoController();
-        PostController postc = new PostController();
-
-        UsuariosTest ut = new UsuariosTest();
-        //ut.manageUsuarioFunctions();
 
 
-        //postc.addPost(new Post("Titulo del post", "Descripcion del post"));
-        System.out.println(postc.getPost(1));
-        postc.deletePost(1);
-        System.out.println(postc.getPost(1));
-        //uc.createUsuario("Manuel", "fhfdgsgdg", "example@gmail.com");
-        //uc.createUsuario("Maria", "sdeoqopqdnffsf", "example02@gmail.com");
+        TagController tg = new TagController();
 
-        //dc.addDireccionUsuario(3, "Calle Santiago", "10A", 12506, "A coruña", "España");
-        //dc.addDireccionUsuario(4, "Calle Senrra", "12A", 12506, "A coruña", "España");
 
-        //dc.listarDirecciones();
-        //Marca newMarca = mc.addMarca("inventada", "Nueva marca añadida inventada");
-        //new MarcaController().deleteMarca(newMarca.getId());
-        //new MarcaController().updateMarca(newMarca.getId(), new Marca("Cambio cosasss", "Cambio desscripcion"));
-        
-        //mc.listarMarcas();
-        //new DireccionController().deleteDireccionUsuario(2);
-        //new DireccionController().addDireccionUsuario(2, "Cambio de la direccion 2", "545", 0, "editada", "inentado");
 
-        //mc.deleteMarca(4);
-        //pc.listarProductos();
-        //pc.addProduct("Nuevo producto", "Descripcion de mi producto añadido", 154.23, 23, 3);
-        //pc.addProduct("Nuevo producto", "Descripcion de mi producto añadido", 154.23, 23, 3);
-        //pc.addProduct("Nuevo producto", "Descripcion de mi producto añadido", 154.23, 23, 3);
-        //pc.updateProductInfo(15, "Nombre actualizado actualizado", "decripcion actualizada", 1999.9, 23, 2);
-        //pc.listFullProductInfo();
-        //uc.listarPedidosUsuario(2);
 
-        //uc.listarUsuarios();
+        BlogController bc = new BlogController();
+        Set<Tag> tagsToAdd = tg.seleccionarTags(tg.getListAllTags(), new HashSet<>(Arrays.asList("Tecnología", "Ciencia")));
+        int idBlog = bc.crearPublicacion("Teorema del mono infinito", "Ciencia y tencología", "¿Has oido hablar alguna vez del teorema del mono infinito?", tagsToAdd);
 
+        bc.getPublicacion(idBlog);
     }
 }
