@@ -2,12 +2,14 @@ package com.applicacion_hibernate.controller.blogController;
 
 import com.applicacion_hibernate.config.HibernateUtil;
 import com.applicacion_hibernate.entidades.blog.Post;
+import com.applicacion_hibernate.entidades.blog.Tag;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.sql.ast.tree.predicate.BooleanExpressionPredicate;
 
 public class PostController {
 
+    PostDetailsController detailsController = new PostDetailsController();
     /**
      * Funcion que añade un post a nuestra Base de datos
      * @param post
@@ -53,7 +55,14 @@ public class PostController {
         try(Session session = HibernateUtil.getSessionFactory().openSession()) {
             tx = session.beginTransaction();
             Post deletePost = session.get(Post.class, identificador);
-            if(deletePost != null) session.remove(deletePost);
+            if(deletePost != null) {
+                //Se elimina de cada tag los post asociados
+                for(Tag tag : deletePost.getTags()){
+                    tag.getPosts().remove(deletePost);
+                }
+                detailsController.removePostDetails(session, identificador); //Elimina los postDetails
+                session.remove(deletePost);
+            }
             tx.commit();
             System.out.println("Post eliminado con éxito");
             eliminado = true;

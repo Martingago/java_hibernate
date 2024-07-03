@@ -49,21 +49,18 @@ public class PostDetailsController {
         return postDetails;
     }
 
-    public void removePostDetails(int identificador){
-        Transaction tx = null;
-        try(Session session = HibernateUtil.getSessionFactory().openSession()) {
-            tx = session.beginTransaction();
+    public void removePostDetails(Session session, int identificador){
+        try{
             PostDetails postDetails = session.find(PostDetails.class, identificador);
             if(postDetails != null){
                 session.remove(postDetails);
-                tx.commit();
                 System.out.println("Detalles del post eliminados con éxito");
             }else{
                 System.out.println("El post indicado no tiene detalles de post");
             }
         }catch (Exception e){
             System.out.println("Error al eliminar un post: \n" + e);
-            if(tx != null) tx.rollback();
+            throw e;
         }
     }
 

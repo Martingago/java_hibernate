@@ -1,6 +1,7 @@
 package com.applicacion_hibernate.controller.blogController;
 
 import com.applicacion_hibernate.config.HibernateUtil;
+import com.applicacion_hibernate.entidades.blog.Post;
 import com.applicacion_hibernate.entidades.blog.Tag;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -34,6 +35,11 @@ public class TagController {
             tx = session.beginTransaction();
             Tag tag = session.find(Tag.class, identificador);
             if(tag != null){
+                //Se eliminan las asociaciones con otros post:
+                for(Post post : tag.getPosts()){
+                    post.removeTag(tag);
+                }
+
                 session.remove(tag);
                 tx.commit();
                 System.out.println("Tag con identificador: " + identificador + " eliminado con éxito");
@@ -60,19 +66,4 @@ public class TagController {
         return tags;
     }
 
-    /**
-     * Recibe como parámetro un listado de tags existente en la Base de datos y una lista de nombres
-     * @param allTags
-     * @param objetiveTags
-     * @return lista de tags que coinciden con las tags pasadas como cadena
-     */
-    public Set<Tag> seleccionarTags(Set<Tag> allTags, Set<String>objetiveTags ){
-        Set<Tag> tagsSeleccionadas = new HashSet<>();
-        for (Tag tag : allTags){
-            if(objetiveTags.contains(tag.getName())){
-                tagsSeleccionadas.add(tag);
-            }
-        }
-        return tagsSeleccionadas;
-    }
 }
