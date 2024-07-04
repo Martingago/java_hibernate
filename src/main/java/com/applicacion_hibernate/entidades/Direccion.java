@@ -1,7 +1,6 @@
 package com.applicacion_hibernate.entidades;
 
-import com.applicacion_hibernate.DAO.IdentificadorInterface;
-import jakarta.persistence.CascadeType;
+import com.applicacion_hibernate.dao.IdentificadorInterface;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;

@@ -1,11 +1,10 @@
 package com.applicacion_hibernate.controller;
 
-import com.applicacion_hibernate.DAO.Model;
+import com.applicacion_hibernate.dao.Model;
 import com.applicacion_hibernate.config.HibernateUtil;
 import com.applicacion_hibernate.entidades.Direccion;
 import com.applicacion_hibernate.entidades.Pedido;
 import com.applicacion_hibernate.entidades.Usuario;
-import org.hibernate.Hibernate;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -32,7 +31,14 @@ public class UsuarioController {
     }
 
     public Usuario getUsuario(int identificador){
-        return usuarioModel.get(identificador);
+        Usuario usuario = null;
+        try {
+            Session session = HibernateUtil.getSessionFactory().openSession();
+            usuario = usuarioModel.getData(session, identificador);
+        }catch (Exception e){
+            System.out.println("Se ha producido un error al obtener el usuario: " + e);
+        }
+        return usuario;
     }
 
     public Direccion getUsuarioDirecction(int identificador){

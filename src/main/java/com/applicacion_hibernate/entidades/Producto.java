@@ -1,6 +1,6 @@
 package com.applicacion_hibernate.entidades;
 
-import com.applicacion_hibernate.DAO.IdentificadorInterface;
+import com.applicacion_hibernate.dao.IdentificadorInterface;
 import jakarta.persistence.*;
 
 import java.util.HashSet;

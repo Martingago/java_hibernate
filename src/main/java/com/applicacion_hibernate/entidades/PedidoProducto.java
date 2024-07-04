@@ -1,6 +1,5 @@
 package com.applicacion_hibernate.entidades;
 
-import com.applicacion_hibernate.DAO.IdentificadorInterface;
 import jakarta.persistence.*;
 
 @Entity

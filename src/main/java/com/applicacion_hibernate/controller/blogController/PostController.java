@@ -110,4 +110,20 @@ public class PostController {
             return session.find(Post.class, identificador);
         }
     }
+
+    /**
+     * Obtiene un post gestionado desde una session externa
+     * @param session
+     * @param identificador
+     * @return
+     */
+    public Post getPost(Session session, int identificador){
+        Post post = null;
+        try {
+             post = session.find(Post.class, identificador);
+        }catch (Exception e){
+            throw e;
+        }
+        return  post;
+    }
 }

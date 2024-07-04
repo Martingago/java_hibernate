@@ -1,4 +1,4 @@
-package com.applicacion_hibernate.DAO;
+package com.applicacion_hibernate.dao;
 
 import com.applicacion_hibernate.config.HibernateUtil;
 import java.util.List;
@@ -65,29 +65,13 @@ public abstract class Model<T> {
     }
 
     /**
-     * Obtiene los datos de una entidad en especifico de la base de datos
-     *
-     * @param identificador de la entidad a buscar
-     * @return identidad encontrada en la base de datos.
+     * Funcion que obtiene los datos de una entidad en una base de datos gestionada desde una session externa
+     * @param session
+     * @param identificador
+     * @return
      */
-    public T get(int identificador) {
-        Session session = HibernateUtil.getSessionFactory().openSession();
-        Transaction transaction = null;
-        T entidad = null;
-        try {
-            transaction = session.beginTransaction();
-            //Buscar entidad por identificador:
-            entidad = session.get(entityClass, identificador);
-            transaction.commit();
-        } catch (Exception e) {
-            System.out.println("Se ha producido un error al cargar los datos");
-            if (transaction != null) {
-                transaction.rollback(); //Se cancela la transaction
-            }
-        } finally {
-            session.close();
-        }
-        return entidad;
+    public T getData(Session session, int identificador){
+          return session.find(entityClass, identificador);
     }
 
     /**

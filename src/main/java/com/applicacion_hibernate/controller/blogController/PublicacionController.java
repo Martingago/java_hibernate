@@ -1,9 +1,11 @@
 package com.applicacion_hibernate.controller.blogController;
 
 import com.applicacion_hibernate.config.HibernateUtil;
+import com.applicacion_hibernate.dto.Publicacion;
 import com.applicacion_hibernate.entidades.blog.Post;
 import com.applicacion_hibernate.entidades.blog.PostDetails;
 import com.applicacion_hibernate.entidades.blog.Tag;
+import org.hibernate.Hibernate;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
@@ -11,7 +13,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
-public class BlogController {
+public class PublicacionController {
     PostController pc = new PostController();
     PostDetailsController pdc = new PostDetailsController();
 
@@ -41,7 +43,6 @@ public class BlogController {
                     post.addTag(persistedtag);
                 }
             }
-
             pdc.addPostDetails(session, post, new PostDetails(topic, new Date())); //Se crea post details
             postId = post.getId();
             tx.commit();
@@ -56,15 +57,40 @@ public class BlogController {
     /**
      * Obtiene la información de una publicación completa
      * @param identificador
+     * @return Publicacion devuelve un Objeto Publicacion que contiene los datos de: Post, PostDetails, y Set<Tag>
      */
-    public void getPublicacion(int identificador){
-        Post post = pc.getPost(identificador);
-        PostDetails details = pdc.getPostDetails(identificador);
-        if(post != null && details != null)
-        System.out.println("Detalles de la publicacion: \n" + post.toString() + "\n" + details.toString());
-        else{
-            System.out.println("No se encontraron datos para una publicacion con id: "+ identificador);
+    public Publicacion getPublicacion(int identificador){
+        Publicacion publicacion = null;
+        Post post = null;
+        PostDetails details = null;
+        Set<Tag> tagsList = null;
+        try {
+            Session session = HibernateUtil.getSessionFactory().openSession();
+            post = pc.getPost(session, identificador); //Se obtiene el post especificado
+            if(post != null){
+                details = pdc.getPostDetails(session, identificador); //Se obtienen los details
+                tagsList = post.getTags();
+                Hibernate.initialize(tagsList);
+                //Se crea el objeto publicacion que contiene todos los datos de publicacion
+                publicacion = new Publicacion(post, details, tagsList);
+            }
+            session.close();
+        }catch (Exception e){
+            throw e;
         }
+        return publicacion;
+    }
+
+    /**
+     * Funcion que imprime los datos de una publicación
+     * @param publicacion
+     */
+    public void imprimirDatosPublicacion(Publicacion publicacion){
+     if(publicacion != null){
+         System.out.println(publicacion.toString());
+     }else{
+         System.out.println("No se ha podido imprimir los datos de la publicación");
+     }
     }
 
 }

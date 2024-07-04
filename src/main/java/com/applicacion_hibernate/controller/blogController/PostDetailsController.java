@@ -75,4 +75,20 @@ public class PostDetailsController {
         }
     }
 
+    /**
+     * Obtiene los postDetails de un post especificado
+     * @param session
+     * @param identificador
+     * @return
+     */
+    public PostDetails getPostDetails(Session session, int identificador){
+        PostDetails details = null;
+        try {
+            details = session.find(PostDetails.class, identificador);
+        }catch (Exception e){
+            throw  e;
+        }
+        return details;
+    }
+
 }

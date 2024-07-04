@@ -1,5 +1,5 @@
 
-package com.applicacion_hibernate.DAO;
+package com.applicacion_hibernate.dao;
 
 public interface IdentificadorInterface {
 

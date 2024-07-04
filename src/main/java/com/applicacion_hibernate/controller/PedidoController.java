@@ -1,6 +1,6 @@
 package com.applicacion_hibernate.controller;
 
-import com.applicacion_hibernate.DAO.Model;
+import com.applicacion_hibernate.dao.Model;
 import com.applicacion_hibernate.entidades.Pedido;
 
 import java.util.List;
